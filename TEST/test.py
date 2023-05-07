@@ -19,7 +19,7 @@ class Client:
     def fetch_data(self, data: Dict) -> Dict:
         for api_key in self.api_keys:
             headers = {'Content-Type': 'application/x-www-form-urlencoded', 'x-api-key': api_key}
-            response = requests.get(self.base_url + '/api/v2/data.json', params=data, headers=headers)
+            response = requests.get(self.base_url + '/api/v2/indicators.json', params=data, headers=headers)
 
             if response.status_code == 200:
                 if self.debug:
