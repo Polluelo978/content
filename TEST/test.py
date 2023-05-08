@@ -50,7 +50,7 @@ def test_module(client: Client) -> str:
 
 
 def make_yesterday_string():
-    yesterday = datetime.datetime.today() - datetime.timedelta(days=1)
+    yesterday = datetime.datetime.today() - datetime.timedelta(days=10)
     return yesterday.strftime("%Y/%m/%d")
 
 
