@@ -5,8 +5,6 @@ from CommonServerUserPython import *
 import json
 import requests
 import datetime
-import csv
-from io import StringIO
 from typing import Dict
 
 
@@ -54,10 +52,10 @@ def make_yesterday_string():
     return yesterday.strftime("%Y/%m/%d")
 
 
-def make_params_data_range(gid='', fid='', tid='', start='', end='', attribute='', search_text='', m='', limit='', order_name='', order='ASC', unique='true', columns=['id', 'value', 'category', 'description', 'type', 'date', 'time', 'reliability', 'created_at', 'updated_at']):
+def make_params_data_range(gid='', fid='', tid='', start='', end='', attribute='', search_text='', m='', limit='', order_name='', order='ASC', unique='true', columns=['indicator_id', 'indicator_value', 'indicator_category', 'indicator_description', 'indicator_type', 'indicator_date', 'indicator_time', 'indicator_reliability', 'indicator_created_at', 'indicator_updated_at']):
 
     if start == '' and end == '':
-        return_error('Be sure to specify start or end.')
+        demisto.error('Be sure to specify start or end.')
 
     return {
         'gid': gid,
@@ -74,22 +72,6 @@ def make_params_data_range(gid='', fid='', tid='', start='', end='', attribute='
         'order': order,
         'columns[]': columns
     }
-
-
-def write_to_csv(obj):
-    data = {}
-    if "data" in obj:
-        data = obj['data']
-
-    if len(data):
-        output_buffer = StringIO()
-        output = csv.writer(output_buffer)
-        output.writerow(data[0].keys())
-        for row in data:
-            output.writerow(row.values())
-        return output_buffer.getvalue()
-    else:
-        return ""
 
 
 def main():
@@ -110,14 +92,10 @@ def main():
         params = make_params_data_range(attribute='updated_at', start=yesterday)
         data = client.fetch_data(params)
 
-        csv_data = write_to_csv(data)
-
         demisto.results({
             'Type': entryTypes['note'],
-            'Contents': csv_data,
-            'ContentsFormat': formats['csv'],
-            'File': 'data.csv',
-            'FileMimeType': 'text/csv'
+            'Contents': data,
+            'ContentsFormat': formats['json'],
         })
 
 
