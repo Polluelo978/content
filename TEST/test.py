@@ -34,6 +34,7 @@ def test_module(client: Client) -> str:
     test_params = make_params_data_range(attribute='updated_at', start=make_yesterday_string(), limit='1')
     try:
         response = client.fetch_data(test_params)
+        print(response)
 
         if 'indicators' in response:
             return "ok"
@@ -77,10 +78,11 @@ def make_params_data_range(gid='', fid='', tid='', start='', end='', attribute='
 def main():
     command = demisto.command()
 
-    base_url = demisto.params().get('base_url')
-    api_key1 = demisto.params().get('api_key1')
-    api_key2 = demisto.params().get('api_key2')
-    debug = demisto.params().get('debug', False)
+    params = demisto.params()
+    base_url = params.get('base_url')
+    api_key1 = params.get('credentials', {}).get('api_key1')
+    api_key2 = params.get('credentials', {}).get('api_key2')
+    debug = params.get('debug', False)
 
     client = Client(base_url, [api_key1, api_key2], debug)
 
