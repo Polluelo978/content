@@ -31,7 +31,8 @@ class Client:
 
 
 def test_module(client: Client) -> str:
-    test_params = make_params_data_range(attribute='updated_at', start=make_yesterday_string(), limit='1')
+    yesterday = make_yesterday_string()
+    test_params = make_params_data_range(attribute='updated_at', start=yesterday, limit='1')
     try:
         response = client.fetch_data(test_params)
         print(response)
