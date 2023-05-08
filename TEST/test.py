@@ -35,7 +35,7 @@ def test_module(client: Client) -> str:
     try:
         response = client.fetch_data(test_params)
 
-        if "data" in response:
+        if 'indicators' in response:
             return "ok"
         else:
             error_message = "Test failed. Please check your API keys and Base URL."
@@ -90,6 +90,7 @@ def main():
     elif command == 'fetch-data':
         yesterday = make_yesterday_string()
         params = make_params_data_range(attribute='updated_at', start=yesterday)
+
         data = client.fetch_data(params)
 
         demisto.results({
