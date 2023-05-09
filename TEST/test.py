@@ -1,6 +1,6 @@
 # import demistomock as demisto
-from CommonServerPython import *
-from CommonServerUserPython import *
+# from CommonServerPython import *
+# from CommonServerUserPython import *
 
 import json
 import requests
@@ -31,6 +31,7 @@ class Client:
 
 
 def test_module(client: Client) -> str:
+    demisto.debug('test module started.')
     yesterday = make_yesterday_string()
     test_params = make_params_data_range(attribute='updated_at', start=yesterday, limit='1')
     try:
@@ -103,5 +104,6 @@ def main():
         })
 
 
-if __name__ in ('MAIN_COMMANDS', 'main', '__builtin__', '__builtins__', '__main__'):
+if __name__ in ('MAIN_COMMANDS', 'main', '__builtin__', '__builtins__', '__main__', 'builtins'):
     main()
+    
