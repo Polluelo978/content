@@ -16,6 +16,9 @@ class Client:
 
     def fetch_data(self, data: Dict) -> Dict:
         for api_key in self.api_keys:
+
+            demisto.debug(api_key)
+
             headers = {'Content-Type': 'application/x-www-form-urlencoded', 'x-api-key': api_key}
             response = requests.get(self.base_url + '/api/v2/indicators.json', params=data, headers=headers)
 
@@ -31,7 +34,9 @@ class Client:
 
 
 def test_module(client: Client) -> str:
+
     demisto.debug('test module started.')
+
     yesterday = make_yesterday_string()
     test_params = make_params_data_range(attribute='updated_at', start=yesterday, limit='1')
     try:
@@ -82,8 +87,8 @@ def main():
 
     params = demisto.params()
     base_url = params.get('base_url')
-    api_key1 = params.get('credentials', {}).get('api_key1')
-    api_key2 = params.get('credentials', {}).get('api_key2')
+    api_key1 = params.get('api_key1')
+    api_key2 = params.get('api_key2')
     debug = params.get('debug', False)
 
     client = Client(base_url, [api_key1, api_key2], debug)
@@ -106,4 +111,3 @@ def main():
 
 if __name__ in ('MAIN_COMMANDS', 'main', '__builtin__', '__builtins__', '__main__', 'builtins'):
     main()
-    
