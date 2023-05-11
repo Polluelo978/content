@@ -1,6 +1,6 @@
-# import demistomock as demisto
-# from CommonServerPython import *
-# from CommonServerUserPython import *
+import demistomock as demisto
+from CommonServerPython import *
+from CommonServerUserPython import *
 
 import json
 import requests
@@ -60,7 +60,7 @@ def make_yesterday_string():
     return yesterday.strftime("%Y/%m/%d")
 
 
-def make_params_data_range(gid='', fid='', tid='', start='', end='', attribute='', search_text='', m='', limit='', order_name='', order='ASC', unique='true', columns=['indicator_id', 'indicator_value', 'indicator_category', 'indicator_description', 'indicator_type', 'indicator_date', 'indicator_time', 'indicator_reliability', 'indicator_created_at', 'indicator_updated_at']):
+def make_params_data_range(gid='', fid='', tid='', start='', end='', attribute='', search_text='', m='', limit='', order_name='', order='ASC', unique='true', columns=['indicator_id', 'indicator_value', 'indicator_category', 'indicator_description', 'indicator_type', 'indicator_date', 'indicator_time', 'indicator_reliability', 'indicator_created_at', 'indicator_updated_at', 'thread', 'feed', 'group']):
 
     if start == '' and end == '':
         demisto.error('Be sure to specify start or end.')
